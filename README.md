@@ -1,6 +1,6 @@
 # Sample WebSocket Chat Room App
 
-Using Socket.io and Express.js(app without the express generator templates).
+Example application using Socket.io and Express.js(app without the express generator templates).
 
 ## Run the example app
 
