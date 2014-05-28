@@ -44,16 +44,19 @@ chat_room.sockets.on('connection', function(socket) {
   if (user.name == 'Anonymous')
     welcome_msg = 'Welcome to chat room. Append /nickname with url to display it with your chat.';
 
-  // Socket events
+  // Socket entrance event
   socket.emit('entrance', { message: welcome_msg });
 
+  // Disconnect event
   socket.on('disconnect', function() {
     chat_room.sockets.emit('exit', { message: '<strong>' + user.name + '</strong>' + ' has left the room.' });
   });
 
+  // custom event: chat
   socket.on('chat', function(data) {
     chat_room.sockets.emit('chat', { message: '<strong>' + user.name + '</strong>' + '#: ' + data.message });
   });
 
-  chat_room.sockets.emit('entrance', { message: '<strong>' + user.name + '</strong>' + ' joined the chat room.' });
+  // send to all clients expect the sender
+  socket.broadcast.emit('entrance', { message: '<strong>' + user.name + '</strong>' + ' joined the chat room.' });
 });
